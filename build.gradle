@@ -1,28 +1,93 @@
+// プラグイン設定
 plugins {
+
+	// Javaを使用するための設定
 	id 'java'
+
+	// SpringBootを使用するための設定
 	id 'org.springframework.boot' version '3.3.1'
+
+	// 依存関係管理を使用するための設定
 	id 'io.spring.dependency-management' version '1.1.5'
 }
 
+// 本設定ファイルが対象とするグループ
 group = 'com.example'
+
+// バージョン設定
 version = '0.0.1-SNAPSHOT'
 
+// Javaの設定
 java {
+
+	// Java 21 を使用する設定
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
 	}
 }
 
+// コンフィグ(lombokを使用するために必要なannotationProcessorを設定)
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+// リポジトリ設定
 repositories {
+
+	// mavenCentralを参照して資材を取得する
 	mavenCentral()
 }
 
+// 依存関係の設定
 dependencies {
+
+	// メール機能を使用するための設定
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	// thymeleafを使用するための設定
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+	// バリデーションを使用するための設定
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// Webアプリを使用するための設定
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// MyBatisを使用するための設定
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+
+	// SpringSessionを使用するための設定(まだセッションは使わないため、コメントアウト)
+	//implementation 'org.springframework.session:spring-session-core'
+	//implementation 'org.springframework.session:spring-session-jdbc'
+
+	// lombokを使用するための設定
+	compileOnly 'org.projectlombok:lombok'
+
+	// devtoolsを使用するための設定
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	// MySQLコネクタを使用するための設定
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	// Oracleコネクタを使用するための設定
+	runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
+
+	// lombokを使用するための設定
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// SpringBootTestを使用するための設定
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+
+	// JUnitを使用するための設定
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+// テストタスクの設定
 tasks.named('test') {
+
+	// JUnitプラットフォームを使用してテストを行う
 	useJUnitPlatform()
 }
