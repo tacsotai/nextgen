@@ -27,11 +27,11 @@ public interface SeatMapper {
 				#{stand}, #{event}, #{type}, #{position}, #{place}
 			)
 			""")
-	int insert(Seat fewColumnsTran);
+	int insert(Seat seat);
 
 	@Delete("""
 			DELETE FROM SEAT
 			WHERE ID = #{id}
 			""")
-	int deleteLast(Seat fewColumnsTran);
+	int deleteLast(Seat seat);
 }

@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.nextgen.dto.DeleteFewOut;
-import com.example.nextgen.dto.GetFewOut;
-import com.example.nextgen.dto.PostFewOut;
+import com.example.nextgen.dto.DeleteSeatOut;
+import com.example.nextgen.dto.GetSeatOut;
+import com.example.nextgen.dto.PostSeatOut;
 import com.example.nextgen.entity.Seat;
 import com.example.nextgen.service.SeatService;
 import com.example.nextgen.util.ExceptionUtil;
@@ -32,72 +32,72 @@ public class SeatRestController {
 	private final ExceptionUtil exceptionUti;
 
 	@GetMapping("/seat/v1")
-	public ResponseEntity<GetFewOut> getSeatList() {
+	public ResponseEntity<GetSeatOut> getSeatList() {
 
 		// 起動したコントローラメソッドをログ記録
 		log.info("GET /seat/v1");
 
-		var getFewOut = new GetFewOut();
+		var getSeatOut = new GetSeatOut();
 		try {
 			// 業務ロジックを呼び出す
 			List<Seat> seatTranList = service.getSeatList();
-			getFewOut.setSeatList(seatTranList);
+			getSeatOut.setSeatList(seatTranList);
 
 		} catch (Exception e) {
 
 			// 例外発生時は、何らかの方法でエラーメッセージを取得して出力パラメータに渡す
-			getFewOut.setErrMsgList(exceptionUti.toErrMsgList(e));
+			getSeatOut.setErrMsgList(exceptionUti.toErrMsgList(e));
 		}
 
 		// JSON値を返却する
-		return ResponseEntity.ok(getFewOut);
+		return ResponseEntity.ok(getSeatOut);
 	}
 
 	@PostMapping("/seat/v1")
-	public ResponseEntity<PostFewOut> insertSeat(@RequestBody Seat seat) {
+	public ResponseEntity<PostSeatOut> insertSeat(@RequestBody Seat seat) {
 
 		// 起動したコントローラメソッドをログ記録
 		log.info("POST /seat/v1");
 
-		var postFewOut = new PostFewOut();
+		var postSeatOut = new PostSeatOut();
 		try {
 			// 業務ロジックを呼び出す
 			service.insertSeat(seat);
 			List<Seat> seatList = service.getSeatList();
-			postFewOut.setSeatList(seatList);
+			postSeatOut.setSeatList(seatList);
 
 		} catch (Exception e) {
 
 			// 例外発生時は、何らかの方法でエラーメッセージを取得して出力パラメータに渡す
-			postFewOut.setErrMsgList(exceptionUti.toErrMsgList(e));
+			postSeatOut.setErrMsgList(exceptionUti.toErrMsgList(e));
 		}
 
 		// JSON値を返却する
-		return ResponseEntity.ok(postFewOut);
+		return ResponseEntity.ok(postSeatOut);
 	}
 
 	@DeleteMapping("/seat/v1")
-	public ResponseEntity<DeleteFewOut> deleteSeat(@RequestParam Integer id) {
+	public ResponseEntity<DeleteSeatOut> deleteSeat(@RequestParam Integer id) {
 
 		// 起動したコントローラメソッドをログ記録
 		log.info("DELETE /seat/v1");
 
-		var deleteFewOut = new DeleteFewOut();
+		var deleteSeatOut = new DeleteSeatOut();
 		try {
 			// 業務ロジックを呼び出す
 			var seat = new Seat();
 			seat.setId(id);
 			service.deleteSeat(seat);
 			List<Seat> seatList = service.getSeatList();
-			deleteFewOut.setSeatList(seatList);
+			deleteSeatOut.setSeatList(seatList);
 
 		} catch (Exception e) {
 
 			// 例外発生時は、何らかの方法でエラーメッセージを取得して出力パラメータに渡す
-			deleteFewOut.setErrMsgList(exceptionUti.toErrMsgList(e));
+			deleteSeatOut.setErrMsgList(exceptionUti.toErrMsgList(e));
 		}
 
 		// JSON値を返却する
-		return ResponseEntity.ok(deleteFewOut);
+		return ResponseEntity.ok(deleteSeatOut);
 	}
 }

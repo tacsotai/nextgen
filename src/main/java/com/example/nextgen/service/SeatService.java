@@ -14,19 +14,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SeatService {
 
-	private final SeatMapper fewColumnsTranMapper;
+	private final SeatMapper seatMapper;
 
 	public List<Seat> getSeatList() {
-		return fewColumnsTranMapper.select();
+		return seatMapper.select();
 	}
 
 	@Transactional(rollbackFor = Exception.class)
-	public int insertSeat(Seat fewColumnsTran) {
-		return fewColumnsTranMapper.insert(fewColumnsTran);
+	public int insertSeat(Seat seat) {
+		return seatMapper.insert(seat);
 	}
 
 	@Transactional(rollbackFor = Exception.class)
-	public int deleteSeat(Seat fewColumnsTran) {
-		return fewColumnsTranMapper.deleteLast(fewColumnsTran);
+	public int deleteSeat(Seat seat) {
+		return seatMapper.deleteLast(seat);
 	}
 }

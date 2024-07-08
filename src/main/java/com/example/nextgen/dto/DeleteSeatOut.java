@@ -7,10 +7,10 @@ import com.example.nextgen.entity.Seat;
 import lombok.Data;
 
 /**
- * 少数項目トランザクションテーブルのGETリクエスト時の出力DTO
+ * シートテーブルのDELETEリクエスト時の出力DTO
  */
 @Data
-public class GetFewOut {
+public class DeleteSeatOut {
 
 	/** 0なら正常終了、それ以外ならエラー */
 	private Integer result;
