@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>dbPerformanceTest</title>
+	</head>
+
+	<body>
+		<form id="seatForm" action="#" method="POST">
+			<table>
+				<thead>
+					<th>説明</th>
+					<th>操作</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td>シートテーブルの大量件数select</td>
+						<td><input type="button" onclick="doSubmit('/selectSeat')" value="Do it!"></td>
+					</tr>
+					<tr>
+						<td>シートテーブルの大量件数insert</td>
+						<td><input type="button" onclick="doSubmit('/insertSeat')" value="Do it!"></td>
+					</tr>
+					<tr>
+						<td>シートテーブルの削除</td>
+						<td><input type="button" onclick="doSubmit('/deleteSeat')" value="Do it!"></td>
+					</tr>
+				</tbody>
+			</table>
+			<th:block th:if="${seatList != null && seatList.size > 0}">
+				<table border="1">
+					<!--
+					<thead>
+						<th>ID</th>
+						<th>文字列カラム001</th>
+						<th>文字列カラム002</th>
+						<th>文字列カラム003</th>
+						<th>文字列カラム004</th>
+						<th>文字列カラム005</th>
+						<th>削除フラグ</th>
+						<th>作成者</th>
+						<th>作成日</th>
+						<th>更新者</th>
+						<th>更新日</th>
+					</thead>
+					-->
+					<tbody>
+						<tr th:each="seat : ${seatList}">
+							<td th:text="${seat.id}"></td>
+							<td th:text="${seat.stand}"></td>
+							<td th:text="${seat.event}"></td>
+							<td th:text="${seat.type}"></td>
+							<td th:text="${seat.position}"></td>
+							<td th:text="${seat.place}"></td>
+							<td th:text="${seat.isDeleted}"></td>
+							<td th:text="${seat.createdBy}"></td>
+							<td th:text="${seat.createdAt}"></td>
+							<td th:text="${seat.updatedBy}"></td>
+							<td th:text="${seat.updatedAt}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</th:block>
+		</form>
+	</body>
+	<script>
+		function doSubmit(url) {
+			let form = document.getElementById("seatForm")
+			form.action = url;
+			form.submit();
+		}
+	</script>
+</html>
