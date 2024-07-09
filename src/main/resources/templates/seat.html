@@ -16,15 +16,15 @@
 				<tbody>
 					<tr>
 						<td>シートテーブルの大量件数select</td>
-						<td><input type="button" onclick="doSubmit('/selectSeat')" value="Do it!"></td>
+						<td><input id="btnSelectSeat" type="button" value="Do it!"></td>
 					</tr>
 					<tr>
 						<td>シートテーブルの大量件数insert</td>
-						<td><input type="button" onclick="doSubmit('/insertSeat')" value="Do it!"></td>
+						<td><input id="btnInsertSeat" type="button" value="Do it!"></td>
 					</tr>
 					<tr>
 						<td>シートテーブルの削除</td>
-						<td><input type="button" onclick="doSubmit('/deleteSeat')" value="Do it!"></td>
+						<td><input id="btnDeleteSeat" type="button" value="Do it!"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -64,11 +64,6 @@
 			</th:block>
 		</form>
 	</body>
-	<script>
-		function doSubmit(url) {
-			let form = document.getElementById("seatForm")
-			form.action = url;
-			form.submit();
-		}
-	</script>
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/js/common.js}"></script>
 </html>
