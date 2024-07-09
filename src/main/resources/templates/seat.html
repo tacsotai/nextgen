@@ -31,7 +31,7 @@
 				</tbody>
 			</table>
 			<th:block th:if="${seatList != null && seatList.size > 0}">
-				<table border="1">
+				<table  id="seatTable" border="1">
 					<!--
 					<thead>
 						<th>ID</th>
@@ -47,7 +47,7 @@
 						<th>更新日</th>
 					</thead>
 					-->
-					<tbody>
+					<tbody id="seatTableBody">
 						<tr th:each="seat : ${seatList}">
 							<td th:text="${seat.id}"></td>
 							<td th:text="${seat.stand}"></td>
