@@ -31,11 +31,11 @@ public class SeatRestController {
 	/** 例外処理ユーティリティ */
 	private final ExceptionUtil exceptionUti;
 
-	@GetMapping("/seat/v1")
+	@GetMapping("/api/v1/seats")
 	public ResponseEntity<GetSeatOut> getSeatList() {
 
 		// 起動したコントローラメソッドをログ記録
-		log.info("GET /seat/v1");
+		log.info("GET /api/v1/seats");
 
 		var getSeatOut = new GetSeatOut();
 		try {
@@ -53,11 +53,11 @@ public class SeatRestController {
 		return ResponseEntity.ok(getSeatOut);
 	}
 
-	@PostMapping("/seat/v1")
+	@PostMapping("/api/v1/seats")
 	public ResponseEntity<PostSeatOut> insertSeat(@RequestBody Seat seat) {
 
 		// 起動したコントローラメソッドをログ記録
-		log.info("POST /seat/v1");
+		log.info("POST /api/v1/seats");
 
 		var postSeatOut = new PostSeatOut();
 		try {
@@ -76,11 +76,11 @@ public class SeatRestController {
 		return ResponseEntity.ok(postSeatOut);
 	}
 
-	@DeleteMapping("/seat/v1")
+	@DeleteMapping("/api/v1/seats")
 	public ResponseEntity<DeleteSeatOut> deleteSeat(@RequestParam Integer id) {
 
 		// 起動したコントローラメソッドをログ記録
-		log.info("DELETE /seat/v1");
+		log.info("DELETE /api/v1/seats");
 
 		var deleteSeatOut = new DeleteSeatOut();
 		try {

@@ -7,7 +7,7 @@ function doSubmit(url) {
 $("#btnSelectSeat").on("click", function(event) {
 
 	// ひとまず現状はsubmitで処理ができることを確認する
-	doSubmit('/selectSeat');
+	doSubmit('/selectSeats');
 
 	// デフォルトの挙動(submit)を抑止し、非同期API呼び出しができるようにする
 	//event.preventDerault();
@@ -18,7 +18,7 @@ $("#btnSelectSeat").on("click", function(event) {
 $("#btnInsertSeat").on("click", function(event) {
 
 	// ひとまず現状はsubmitで処理ができることを確認する
-	doSubmit('/insertSeat');
+	doSubmit('/insertSeats');
 
 	// デフォルトの挙動(submit)を抑止し、非同期API呼び出しができるようにする
 	//event.preventDerault();
@@ -29,7 +29,7 @@ $("#btnInsertSeat").on("click", function(event) {
 $("#btnDeleteSeat").on("click", function(event) {
 
 	// ひとまず現状はsubmitで処理ができることを確認する
-	doSubmit('/deleteSeat');
+	doSubmit('/deleteSeats');
 
 	// デフォルトの挙動(submit)を抑止し、非同期API呼び出しができるようにする
 	//event.preventDerault();
