@@ -23,21 +23,21 @@ public class SeatController {
 	/** 遷移先ページ */
 	private static final String NEXT_PAGE = "seat";
 
-	@GetMapping("/getSeatList")
-	public String getSeatList() {
+	@GetMapping("/getSeats")
+	public String getSeats() {
 
 		// 起動したコントローラメソッドをログ記録
-		log.info("/getSeatList");
+		log.info("/getSeats");
 
 		// 次のページに遷移する
 		return NEXT_PAGE;
 	}
 
-	@PostMapping("/selectSeat")
+	@PostMapping("/selectSeats")
 	public String selectSeat(Model model) {
 
 		// 起動したコントローラメソッドをログ記録
-		log.info("/selectSeat");
+		log.info("/selectSeats");
 
 		// APIを呼び出す
 		List<Seat> seatList = seatRestController.getSeatList().getBody().getSeatList();
@@ -49,11 +49,11 @@ public class SeatController {
 		return NEXT_PAGE;
 	}
 
-	@PostMapping("/insertSeat")
+	@PostMapping("/insertSeats")
 	public String insertSeat(Model model) {
 
 		// 起動したコントローラメソッドをログ記録
-		log.info("/insertSeat");
+		log.info("/insertSeats");
 
 		// APIを呼び出す
 		var seat = new Seat();
@@ -71,11 +71,11 @@ public class SeatController {
 		return NEXT_PAGE;
 	}
 
-	@PostMapping("/deleteSeat")
-	public String deleteSeat(Model model) {
+	@PostMapping("/deleteSeats")
+	public String deleteSeats(Model model) {
 
 		// 起動したコントローラメソッドをログ記録
-		log.info("/deleteSeat");
+		log.info("/deleteSeats");
 
 		// APIを呼び出す
 		List<Seat> seatList = seatRestController.getSeatList().getBody().getSeatList();
