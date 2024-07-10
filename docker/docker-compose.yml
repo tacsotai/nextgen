@@ -16,5 +16,15 @@ services:
     ports:
     - 3306:3306
 
+  build_env:
+    container_name: build_env
+    build:
+      dockerfile: corretto/Dockerfile
+    ports:
+      - 8080:8080
+    tty: true
+    volumes:
+      - /home/develop/nextgen:/home/develop/nextgen
+
 volumes:
   mysql_data:
