@@ -1,13 +1,110 @@
+// 【原則使用禁止】subumitの処理にしたいときは、この関数を使うことができる
 function doSubmit(url) {
 	let form = document.getElementById('seatForm')
 	form.action = url;
 	form.submit();
 }
 
+// WEB APIのレスポンスに基づき、jqGridを描画する
+function drawGrid(response) {
+
+	// jqGirdの表の件名を作成する
+	var gridTitle = '興行一覧';
+
+	// jqGridの列の表示名を作成する
+	var colNames = ['id', 'stand', 'event', 'type', 'position', 'place', 'isDeleted', 'createdBy', 'createdAt', 'updatedBy', 'updatedAt'];
+
+	// jqGridの列ごとの詳細設定を行う
+	var colModelSettings = [
+		{name:'id', width:20, align:'center', sortable:true},
+		{name:'stand', width:70, align:'center', sortable:true},
+		{name:'event', width:70, align:'center', sortable:true},
+		{name:'type', width:70, align:'center', sortable:true},
+		{name:'position', width:70, align:'center', sortable:true},
+		{name:'place', width:70, align:'center', sortable:true},
+		{name:'isDeleted', width:70, align:'center', sortable:true},
+		{name:'createdBy', width:70, align:'center', sortable:true},
+		{name:'createdAt', width:70, align:'center', sortable:true},
+		{name:'updatedBy', width:70, align:'center', sortable:true},
+		{name:'updatedAt', width:70, align:'center', sortable:true}
+	];
+
+	// WEB APIのレスポンスをJSONとして解析する
+	var stringified = JSON.stringify(response);
+	var json = JSON.parse(stringified);
+
+	// jqGridを描画する
+	$('#seatTable').jqGrid({
+		data : json['seatList'], // データ
+		datatype : 'local', // データの種類
+		colNames : colNames, // 列ヘッダー名(配列)
+		colModel : colModelSettings, // 列の各種設定(オブジェクト配列)
+		caption : gridTitle, // Gridのタイトル
+		pager : 'seatTablePager', // ページャーのID
+		rowNum : 20, // 初期表示行数
+		rowList : [20, 50, 100], // 行数設定
+		multiselect: true, // チェックボックスを付ける
+		autowidth: true, // 横幅の自動調整を行う
+
+		// ロード完了後の処理
+		loadComplete: function(data){
+			console.log(data);
+		},
+
+		// 行選択時に走る処理
+		onSelectRow: function(rowid, status, e){
+			alert('行が選択されました。');
+			console.log(rowid, status, e);
+		},
+
+		// 行選択直前に走る処理
+		beforeSelectRow: function(rowid, e){
+			alert('行選択のbefore処理です。');
+			console.log(rowid, e);
+			//return false;
+		}
+	});
+}
+
+// WEB APIのレスポンスに基づき、jqGridを描画する
+function redrawGrid(response) {
+
+	// WEB APIのレスポンスをJSONとして解析する
+	var stringified = JSON.stringify(response);
+	var json = JSON.parse(stringified);
+
+	// 描画のために既存の表は一度削除する
+	$('#seatTable').GridUnload();
+
+	// 表を描画しなおす
+	drawGrid(response);
+}
+
 $('#btnSelectSeat').on('click', function(event) {
 
-	// GET処理はサブミットを行い、初期画面を表示する
-	doSubmit('/selectSeats');
+	// REST APIを呼び出す
+	$.ajax({
+		type: 'GET',
+		url: '/api/v1/seats',
+		contentType: 'application/json',
+		async: true,
+		timeout: 10000,
+	})
+	.done(function(response) {
+
+		// 通信が成功したときの処理
+		drawGrid(response);
+	})
+	.fail(function() {
+
+		// 通信が失敗したときの処理
+		console.log('#btnSelectSeat failed.');
+	})
+	.always(function() {
+
+		// 通信が完了したときの処理
+		console.log('#btnSelectSeat end.');
+	});
 });
 
 $('#btnInsertSeat').on('click', function(event) {
@@ -33,27 +130,7 @@ $('#btnInsertSeat').on('click', function(event) {
 	.done(function(response) {
 
 		// 通信が成功したときの処理
-		// WEB APIが返却したJSON値を元に、tableのtbodyを更新する
-		var stringified = JSON.stringify(response);
-		var json = JSON.parse(stringified);
-		var tableBodyHtml = '<tbody id="seatTableBody">';
-		for (let i = 0; i < json['seatList'].length; i++) {
-			tableBodyHtml += '\n<tr>';
-			tableBodyHtml += '<td>' + json['seatList'][i]['id'] + '</td>';
-			tableBodyHtml += '<td>' + json['seatList'][i]['stand'] + '</td>';
-			tableBodyHtml += '<td>' + json['seatList'][i].event + '</td>';
-			tableBodyHtml += '<td>' + json['seatList'][i].type + '</td>';
-			tableBodyHtml += '<td>' + json['seatList'][i].position + '</td>';
-			tableBodyHtml += '<td>' + json['seatList'][i].place + '</td>';
-			tableBodyHtml += '<td>' + json['seatList'][i].isDeleted + '</td>';
-			tableBodyHtml += '<td>' + json['seatList'][i].createdBy + '</td>';
-			tableBodyHtml += '<td>' + json['seatList'][i].createdAt + '</td>';
-			tableBodyHtml += '<td>' + json['seatList'][i].updatedBy + '</td>';
-			tableBodyHtml += '<td>' + json['seatList'][i].updatedAt + '</td>';
-			tableBodyHtml += '</tr>';
-		}
-		tableBodyHtml += '\n</tbody>';
-		$('#seatTableBody').html(tableBodyHtml);
+		redrawGrid(response);
 	})
 	.fail(function() {
 		// 通信が失敗したときの処理
@@ -68,17 +145,9 @@ $('#btnInsertSeat').on('click', function(event) {
 $('#btnDeleteSeat').on('click', function(event) {
 
 	// リクエストパラメータを含むURLを作成する
-	var tableTr = $('#seatTable tr');
-	var deleteTargetId = 0;
-	for (var indexTr = 0; indexTr < tableTr.length; indexTr++) {
-		var cells = tableTr.eq(indexTr).children();
-		for (var indexCell = 0; indexCell < cells.length; indexCell++) {
-			if (indexTr === tableTr.length - 1 && indexCell === 0) {
-				deleteTargetId = cells.eq(indexCell).text();
-				break;
-			}
-		}
-	}
+	var len = $('#seatTable').getGridParam('data').length;
+	var rowData = $('#seatTable').getGridParam('data')[len - 1];
+	var deleteTargetId = rowData.id;
 	var urlWithParam = '/api/v1/seats?id=' + deleteTargetId;
 
 	// REST APIを呼び出す
@@ -92,27 +161,7 @@ $('#btnDeleteSeat').on('click', function(event) {
 	.done(function(response) {
 
 		// 通信が成功したときの処理
-		// WEB APIが返却したJSON値を元に、tableのtbodyを更新する
-		var stringified = JSON.stringify(response);
-		var json = JSON.parse(stringified);
-		var tableBodyHtml = '<tbody id="seatTableBody">';
-		for (let i = 0; i < json['seatList'].length; i++) {
-			tableBodyHtml += '\n<tr>';
-			tableBodyHtml += '<td>' + json['seatList'][i]['id'] + '</td>';
-			tableBodyHtml += '<td>' + json['seatList'][i]['stand'] + '</td>';
-			tableBodyHtml += '<td>' + json['seatList'][i].event + '</td>';
-			tableBodyHtml += '<td>' + json['seatList'][i].type + '</td>';
-			tableBodyHtml += '<td>' + json['seatList'][i].position + '</td>';
-			tableBodyHtml += '<td>' + json['seatList'][i].place + '</td>';
-			tableBodyHtml += '<td>' + json['seatList'][i].isDeleted + '</td>';
-			tableBodyHtml += '<td>' + json['seatList'][i].createdBy + '</td>';
-			tableBodyHtml += '<td>' + json['seatList'][i].createdAt + '</td>';
-			tableBodyHtml += '<td>' + json['seatList'][i].updatedBy + '</td>';
-			tableBodyHtml += '<td>' + json['seatList'][i].updatedAt + '</td>';
-			tableBodyHtml += '</tr>';
-		}
-		tableBodyHtml += '\n</tbody>';
-		$('#seatTableBody').html(tableBodyHtml);
+		redrawGrid(response);
 	})
 	.fail(function() {
 		// 通信が失敗したときの処理

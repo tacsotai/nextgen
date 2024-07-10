@@ -21,7 +21,8 @@ services:
     build:
       dockerfile: corretto/Dockerfile
     ports:
-      - 8080:8080
+      # ホスト側の18080ポートを、コンテナ側の8080ポートにマッピングする
+      - 18080:8080
     tty: true
     volumes:
       - /home/develop/nextgen:/home/develop/nextgen

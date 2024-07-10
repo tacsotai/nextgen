@@ -3,8 +3,12 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<script defer th:src="@{/js/jquery-3.7.1.min.js}"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/jquery.jqgrid.min.js"></script>
 		<script defer th:src="@{/js/common.js}"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/css/ui.jqgrid.min.css"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/plugins/css/ui.multiselect.min.css"/>
 		<title>dbPerformanceTest</title>
 	</head>
 
@@ -17,53 +21,21 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>シートテーブルの大量件数select</td>
+						<td>一覧表示</td>
 						<td><input id="btnSelectSeat" type="button" value="Do it!"></td>
 					</tr>
 					<tr>
-						<td>シートテーブルの大量件数insert</td>
+						<td>1レコード追加(insert)</td>
 						<td><input id="btnInsertSeat" type="button" value="Do it!"></td>
 					</tr>
 					<tr>
-						<td>シートテーブルの削除</td>
+						<td>1レコード削除(delete)</td>
 						<td><input id="btnDeleteSeat" type="button" value="Do it!"></td>
 					</tr>
 				</tbody>
 			</table>
-			<th:block th:if="${seatList != null && seatList.size > 0}">
-				<table  id="seatTable" border="1">
-					<!--
-					<thead>
-						<th>ID</th>
-						<th>文字列カラム001</th>
-						<th>文字列カラム002</th>
-						<th>文字列カラム003</th>
-						<th>文字列カラム004</th>
-						<th>文字列カラム005</th>
-						<th>削除フラグ</th>
-						<th>作成者</th>
-						<th>作成日</th>
-						<th>更新者</th>
-						<th>更新日</th>
-					</thead>
-					-->
-					<tbody id="seatTableBody">
-						<tr th:each="seat : ${seatList}">
-							<td th:text="${seat.id}"></td>
-							<td th:text="${seat.stand}"></td>
-							<td th:text="${seat.event}"></td>
-							<td th:text="${seat.type}"></td>
-							<td th:text="${seat.position}"></td>
-							<td th:text="${seat.place}"></td>
-							<td th:text="${seat.isDeleted}"></td>
-							<td th:text="${seat.createdBy}"></td>
-							<td th:text="${seat.createdAt}"></td>
-							<td th:text="${seat.updatedBy}"></td>
-							<td th:text="${seat.updatedAt}"></td>
-						</tr>
-					</tbody>
-				</table>
-			</th:block>
+			<table id="seatTable"></table>
+			<div id="seatTablePager"></div>
 		</form>
 	</body>
 </html>
