@@ -14,7 +14,7 @@ public interface SeatMapper {
 
 	@Select("""
 			SELECT
-				ID, STAND, EVENT, `TYPE`, POSITION, PLACE,
+				ID, STAND, EVENT, TYPE, POSITION, PLACE,
 				IS_DELETED, CREATED_BY, CREATED_AT, UPDATED_BY, UPDATED_AT
 			FROM SEAT
 			""")
@@ -22,7 +22,7 @@ public interface SeatMapper {
 
 	@Insert("""
 			INSERT INTO SEAT(
-				STAND, EVENT, `TYPE`, POSITION, PLACE
+				STAND, EVENT, TYPE, POSITION, PLACE
 			) VALUES(
 				#{stand}, #{event}, #{type}, #{position}, #{place}
 			)

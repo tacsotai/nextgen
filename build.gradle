@@ -68,11 +68,8 @@ dependencies {
 	// devtoolsを使用するための設定
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-	// MySQLコネクタを使用するための設定
-	runtimeOnly 'com.mysql:mysql-connector-j'
-
 	// Oracleコネクタを使用するための設定
-	runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
+	implementation 'com.oracle.database.jdbc:ojdbc11'
 
 	// lombokを使用するための設定
 	annotationProcessor 'org.projectlombok:lombok'
