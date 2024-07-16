@@ -3,6 +3,9 @@ plugins {
 
 	// Javaを使用するための設定
 	id 'java'
+	
+	// Servletを使用するための設定
+	id 'war'
 
 	// SpringBootを使用するための設定
 	id 'org.springframework.boot' version '3.3.1'
