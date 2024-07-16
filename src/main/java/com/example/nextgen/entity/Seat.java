@@ -1,6 +1,6 @@
 package com.example.nextgen.entity;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 import lombok.Data;
 
@@ -14,7 +14,7 @@ public class Seat {
 	private String place;
 	private String isDeleted;
 	private String createdBy;
-	private Timestamp createdAt;
+	private Date createdAt;
 	private String updatedBy;
-	private Timestamp updatedAt;
+	private Date updatedAt;
 }
