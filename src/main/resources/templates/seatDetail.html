@@ -15,53 +15,57 @@
 	<body>
 		<form id="seatForm" action="#" method="POST">
 			<table>
-				<tbody>
-					<tr>
-						<td>stand</td>
-						<td><input id="tbStand" type="text"></td>
-						<td>event</td>
-						<td><input id="tbEvent" type="text"></td>
-					</tr>
-					<tr>
-						<td>type</td>
-						<td><input id="tbType" type="text"></td>
-						<td>position</td>
-						<td><input id="tbPosition" type="text"></td>
-					</tr>
-					<tr>
-						<td>検索</td>
-						<td><input id="btnSearchSeat" type="button" value="Do it!"></td>
-						<td></td>
-						<td></td>
-					</tr>
-				</tbody>
-			</table>
-
-<!--
-			<table>
 				<thead>
-					<th>説明</th>
-					<th>操作</th>
+					<th>カラム名</th>
+					<th>値</th>
 				</thead>
 				<tbody>
 					<tr>
-						<td>一覧表示</td>
-						<td><input id="btnSelectSeat" type="button" value="Do it!"></td>
+						<td>id</td>
+						<td th:text="${seat.id}"></td>
 					</tr>
 					<tr>
-						<td>1レコード追加(insert)</td>
-						<td><input id="btnInsertSeat" type="button" value="Do it!"></td>
+						<td>stand</td>
+						<td th:text="${seat.stand}"></td>
 					</tr>
 					<tr>
-						<td>1レコード削除(delete)</td>
-						<td><input id="btnDeleteSeat" type="button" value="Do it!"></td>
+						<td>event</td>
+						<td th:text="${seat.event}"></td>
+					</tr>
+					<tr>
+						<td>type</td>
+						<td th:text="${seat.type}"></td>
+					</tr>
+					<tr>
+						<td>position</td>
+						<td th:text="${seat.position}"></td>
+					</tr>
+					<tr>
+						<td>place</td>
+						<td th:text="${seat.place}"></td>
+					</tr>
+					<tr>
+						<td>isDeleted</td>
+						<td th:text="${seat.isDeleted}"></td>
+					</tr>
+					<tr>
+						<td>createdBy</td>
+						<td th:text="${seat.createdBy}"></td>
+					</tr>
+					<tr>
+						<td>createdAt</td>
+						<td th:text="${seat.createdAt}"></td>
+					</tr>
+					<tr>
+						<td>updatedBy</td>
+						<td th:text="${seat.updatedBy}"></td>
+					</tr>
+					<tr>
+						<td>updatedAt</td>
+						<td th:text="${seat.updatedAt}"></td>
 					</tr>
 				</tbody>
 			</table>
--->
-
-			<table id="seatTable"></table>
-			<div id="seatTablePager"></div>
 		</form>
 	</body>
 </html>

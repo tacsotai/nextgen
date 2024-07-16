@@ -53,13 +53,16 @@ function drawGrid(response) {
 
 		// 行選択時に走る処理
 		onSelectRow: function(rowid, status, e){
-			alert('行が選択されました。');
 			console.log(rowid, status, e);
+
+			// 選択行を取得し、詳細ページにリダイレクトする
+			var rowData = $('#seatTable').getRowData(rowid);
+			var url = '/getSeatsDetail?id=' + rowData.id;
+			location.href = url;
 		},
 
 		// 行選択直前に走る処理
 		beforeSelectRow: function(rowid, e){
-			alert('行選択のbefore処理です。');
 			console.log(rowid, e);
 			//return false;
 		}
@@ -69,16 +72,52 @@ function drawGrid(response) {
 // WEB APIのレスポンスに基づき、jqGridを描画する
 function redrawGrid(response) {
 
-	// WEB APIのレスポンスをJSONとして解析する
-	var stringified = JSON.stringify(response);
-	var json = JSON.parse(stringified);
-
 	// 描画のために既存の表は一度削除する
 	$('#seatTable').GridUnload();
 
 	// 表を描画しなおす
 	drawGrid(response);
 }
+
+$('#btnSearchSeat').on('click', function(event) {
+
+	// テキストボックスの入力内容を検索条件とする
+	var tbStand = $('#tbStand').val();
+	var tbEvent = $('#tbEvent').val();
+	var tbType = $('#tbType').val();
+	var tbPosition = $('#tbPosition').val();
+
+	// JSONデータを作成する
+	var jsonData = JSON.stringify({
+		stand: tbStand,
+		event: tbEvent,
+		type: tbType,
+		position: tbPosition
+	});
+
+	// REST APIを呼び出す
+	$.ajax({
+		type: 'POST',
+		url: '/api/v1/search',
+		data: jsonData,
+		contentType: 'application/json',
+		async: true,
+		timeout: 10000,
+	})
+	.done(function(response) {
+
+		// 通信が成功したときの処理
+		redrawGrid(response);
+	})
+	.fail(function() {
+		// 通信が失敗したときの処理
+		console.log('#btnSearchSeat failed.');
+	})
+	.always(function() {
+		// 通信が完了したときの処理
+		console.log('#btnSearchSeat end.');
+	});
+});
 
 $('#btnSelectSeat').on('click', function(event) {
 
