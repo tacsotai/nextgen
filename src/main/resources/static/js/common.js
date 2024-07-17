@@ -79,6 +79,51 @@ function redrawGrid(response) {
 	drawGrid(response);
 }
 
+// Grid.jsの初期描画
+var grid;
+function toGrid(response) {
+
+	// WEB APIのレスポンスをJSONとして解析する
+	var stringified = JSON.stringify(response);
+	var json = JSON.parse(stringified);
+
+	// jqGridの列の表示名を作成する
+	var colNames = ['id', 'stand', 'event', 'type', 'position', 'place', 'isDeleted', 'createdBy', 'createdAt', 'updatedBy', 'updatedAt'];
+
+	// Grid.jsによる表を生成する
+	grid = new gridjs.Grid({
+		columns: colNames, // 列名
+		data: json['seatList'], // データ
+		sort: true, // ソートする
+		pagination: {
+			limit: 10
+		}, // ページネーション設定
+		url: '/api/v1/search', // URL
+		style:{
+			th:{"color":"navy"},
+			td:{"font-size":"9pt"}
+		} // デフォルトのスタイルを変更し、文字を少し小さくする
+	}).render(document.getElementById('seatTable'));
+
+	// セルクリック時のイベントを設定する
+	grid.on('cellClick', (...args) => {
+		console.log(args);
+	});
+}
+
+// Grid.jsの更新
+function updateGrid(response) {
+
+	// WEB APIのレスポンスをJSONとして解析する
+	var stringified = JSON.stringify(response);
+	var json = JSON.parse(stringified);
+
+	// データのみ差し替える
+	grid.updateConfig({
+		data: json['seatList']
+	}).forceRender();
+}
+
 $('#btnSearchSeat').on('click', function(event) {
 
 	// テキストボックスの入力内容を検索条件とする
@@ -107,7 +152,8 @@ $('#btnSearchSeat').on('click', function(event) {
 	.done(function(response) {
 
 		// 通信が成功したときの処理
-		redrawGrid(response);
+		//redrawGrid(response);
+		toGrid(response);
 	})
 	.fail(function() {
 		// 通信が失敗したときの処理
@@ -132,7 +178,8 @@ $('#btnSelectSeat').on('click', function(event) {
 	.done(function(response) {
 
 		// 通信が成功したときの処理
-		drawGrid(response);
+		//drawGrid(response);
+		updateGrid(response);
 	})
 	.fail(function() {
 
@@ -169,7 +216,8 @@ $('#btnInsertSeat').on('click', function(event) {
 	.done(function(response) {
 
 		// 通信が成功したときの処理
-		redrawGrid(response);
+		//redrawGrid(response);
+		updateGrid(response);
 	})
 	.fail(function() {
 		// 通信が失敗したときの処理
@@ -200,7 +248,8 @@ $('#btnDeleteSeat').on('click', function(event) {
 	.done(function(response) {
 
 		// 通信が成功したときの処理
-		redrawGrid(response);
+		//redrawGrid(response);
+		updateGrid(response);
 	})
 	.fail(function() {
 		// 通信が失敗したときの処理
