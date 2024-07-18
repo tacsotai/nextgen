@@ -6,9 +6,14 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/jquery.jqgrid.min.js"></script>
 		<script defer th:src="@{/js/common.js}"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/css/ui.jqgrid.min.css"/>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/plugins/css/ui.multiselect.min.css"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/css/ui.jqgrid.min.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/plugins/css/ui.multiselect.min.css" />
+
+		<!-- Grid.js -->
+		<link rel='stylesheet' href='https://unpkg.com/gridjs/dist/theme/mermaid.min.css' />
+		<script src='https://unpkg.com/gridjs/dist/gridjs.umd.js'></script>
+
 		<title>dbPerformanceTest</title>
 	</head>
 
@@ -67,8 +72,13 @@
 				</tbody>
 			</table>
 
+			<!-- Grid.js検証のためjqgridはコメント化
 			<table id="seatTable"></table>
 			<div id="seatTablePager"></div>
+			-->
+
+			<div id="seatTable" class="table"></div>
+
 		</form>
 	</body>
 </html>
